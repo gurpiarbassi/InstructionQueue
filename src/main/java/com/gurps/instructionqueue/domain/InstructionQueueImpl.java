@@ -1,22 +1,15 @@
-package com.gurps.instructionqueue.service;
+package com.gurps.instructionqueue.domain;
 
-import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.concurrent.PriorityBlockingQueue;
 
-import com.gurps.instructionqueue.domain.InstructionMessage;
-import com.gurps.instructionqueue.domain.InstructionMessageComparator;
 import com.gurps.instructionqueue.domain.exception.InvalidMessageException;
 
-public class InstructionQueueServiceImpl implements InstructionQueueService{
+public class InstructionQueueImpl implements InstructionQueue{
 
-	/**
-	 * Single Shared instance of the queue.
-	 * 
-	 * TODO Will need to take thread safety considerations into account as a separate exercise.
-	 */
-	private static Queue<InstructionMessage> instructionQueue = new PriorityQueue<InstructionMessage>(11, new InstructionMessageComparator());
+	private static Queue<InstructionMessage> instructionQueue = new PriorityBlockingQueue<InstructionMessage>(11, new InstructionMessageComparator());
 	
-	public InstructionQueueServiceImpl(){
+	public InstructionQueueImpl(){
 		super();
 	}
 	
@@ -45,8 +38,6 @@ public class InstructionQueueServiceImpl implements InstructionQueueService{
 	public InstructionMessage peek() {
 		return instructionQueue.peek();
 	}
-	
-	
 	
 	@Override
 	public void clear() {
