@@ -7,7 +7,7 @@ public enum InstructionPriority {
 	LOW(3),
 	UNKNOWN(4);
 	
-	private int priority;
+	private final int priority;
 	
 	private InstructionPriority(int priority){
 		this.priority = priority;

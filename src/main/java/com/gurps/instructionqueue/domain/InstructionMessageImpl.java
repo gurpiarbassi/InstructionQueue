@@ -1,141 +1,86 @@
 package com.gurps.instructionqueue.domain;
 
+import static com.gurps.instructionqueue.domain.InstructionPriority.HIGH;
+import static com.gurps.instructionqueue.domain.InstructionPriority.LOW;
+import static com.gurps.instructionqueue.domain.InstructionPriority.MEDIUM;
+import static com.gurps.instructionqueue.domain.InstructionPriority.UNKNOWN;
+import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
+import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+
 /**
- * Concrete implementation of IInstructionMessage interface.s
+ * Concrete implementation of InstructionMessage
+ * 
  * @author gurps
  *
  */
 public class InstructionMessageImpl implements InstructionMessage {
 
-	private int instructionType;
-	private int productCode;
-	private int quantity;
-	private int unitOfMeasure;
-	private int timestamp;
-	
-	public InstructionMessageImpl(int instructionType, int productCode,
-			int quantity, int unitOfMeasure, int timestamp) {
-		super();
+	private final int instructionType;
+	private final int productCode;
+	private final int quantity;
+	private final int unitOfMeasure;
+	private final int timestamp;
+
+	public InstructionMessageImpl(int instructionType, int productCode, int quantity, int unitOfMeasure, int timestamp) {
 		this.instructionType = instructionType;
 		this.productCode = productCode;
 		this.quantity = quantity;
 		this.unitOfMeasure = unitOfMeasure;
 		this.timestamp = timestamp;
 	}
-
-	/* (non-Javadoc)
-	 * @see uk.travisperkins.assessment.domain.IInstructionMessage#getInstructionType()
-	 */
+	
 	@Override
 	public int getInstructionType() {
 		return instructionType;
 	}
 
-	/* (non-Javadoc)
-	 * @see uk.travisperkins.assessment.domain.IInstructionMessage#getProductCode()
-	 */
 	@Override
 	public int getProductCode() {
 		return productCode;
 	}
 
-	/* (non-Javadoc)
-	 * @see uk.travisperkins.assessment.domain.IInstructionMessage#getQuantity()
-	 */
 	@Override
 	public int getQuantity() {
 		return quantity;
 	}
 
-	/* (non-Javadoc)
-	 * @see uk.travisperkins.assessment.domain.IInstructionMessage#getUnitOfMeasure()
-	 */
 	@Override
 	public int getUnitOfMeasure() {
 		return unitOfMeasure;
 	}
 
-	/* (non-Javadoc)
-	 * @see uk.travisperkins.assessment.domain.IInstructionMessage#getTimestamp()
-	 */
 	@Override
 	public int getTimestamp() {
 		return timestamp;
 	}
-	
-	
 
 	@Override
-	/**
-	 * Calculates the instruction priority of this instruction message
-	 */
 	public InstructionPriority getPriority() {
-		
-		InstructionPriority ip = null;
-		
-		if(getInstructionType() > 0 && getInstructionType() <= 10){
-			ip = InstructionPriority.HIGH;
+
+		if (getInstructionType() > 0 && getInstructionType() <= 10) {
+			return HIGH;
 		}
-		else if(getInstructionType() > 10 && getInstructionType() <= 90){
-			ip = InstructionPriority.MEDIUM;
+		if (getInstructionType() > 10 && getInstructionType() <= 90) {
+			return MEDIUM;
+		} else if (getInstructionType() > 90 && getInstructionType() < 100) {
+			return LOW;
 		}
-		else if(getInstructionType() > 90 && getInstructionType() < 100){
-			ip = InstructionPriority.LOW;
-		}
-		else{
-			ip = InstructionPriority.UNKNOWN;
-		}
-		
-		return ip;
+		return UNKNOWN;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + instructionType;
-		result = prime * result + productCode;
-		result = prime * result + quantity;
-		result = prime * result + timestamp;
-		result = prime * result + unitOfMeasure;
-		return result;
+		return reflectionHashCode(this);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		InstructionMessageImpl other = (InstructionMessageImpl) obj;
-		if (instructionType != other.instructionType)
-			return false;
-		if (productCode != other.productCode)
-			return false;
-		if (quantity != other.quantity)
-			return false;
-		if (timestamp != other.timestamp)
-			return false;
-		if (unitOfMeasure != other.unitOfMeasure)
-			return false;
-		return true;
+		return reflectionEquals(this, obj);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder("InstructionMessage [");
-		return sb.append("instructionType = ")
-				 .append(instructionType)
-				 .append(", productCode = ")
-				 .append(productCode)
-				 .append(", quantity = ")
-				 .append(quantity)
-				 .append(", unitOfMeasure = ")
-				 .append(unitOfMeasure)
-				 .append(", timestamp = ")
-				 .append(timestamp + "]")
-				 .toString();
+		return reflectionToString(this);
 	}
 }

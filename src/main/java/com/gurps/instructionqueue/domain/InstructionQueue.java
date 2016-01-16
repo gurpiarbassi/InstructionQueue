@@ -1,9 +1,8 @@
-package com.gurps.instructionqueue.service;
+package com.gurps.instructionqueue.domain;
 
-import com.gurps.instructionqueue.domain.InstructionMessage;
 import com.gurps.instructionqueue.domain.exception.InvalidMessageException;
 
-public interface InstructionQueueService {
+public interface InstructionQueue {
 
 	/**
 	 * Puts a message onto the queue
